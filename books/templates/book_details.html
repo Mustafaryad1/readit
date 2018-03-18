@@ -1,0 +1,14 @@
+{% if book.review %}
+    <div class="book">
+        <a href="{% url 'book-details' book.pk %}"> <h3>{{ book.title }}</h3></a>
+        <p>By {% for author in book.authors.all %} <a href="{% url 'author-details' author.pk %}">{{ author.name }} </a> {% endfor %}</p>
+        {% if book.is_favorite %} <p class="highlight">Favorite</p> {% endif %}
+        <p>{{ book.review|linebreaks}}</p>
+        <p class="meta">
+           review on  <strong>{{ book.date_review|date:'D d M Y' }}  </strong>
+            {% if book.reviewed_by %}
+                by <strong>{{ book.reviewed_by.get_full_name|default:book.reviewed_by.username }}</strong>
+            {% endif %}
+        </p>
+    </div>
+{% endif %}
